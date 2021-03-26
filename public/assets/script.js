@@ -36,6 +36,28 @@ async function loadList() {
   btns.forEach(btn => btn.addEventListener('click', burgerBtn));
 }
 
+async function burgerBtn(e) {
 
+  const fn = e.target.dataset.fn;
+  const id = e.target.dataset.bid;
+  let burger_name = null;
+  if (fn === "eat") {
+    // change burger to ate
+    burger_name = e.target.dataset.burger;
+    const res = await fetch(`/burger`, { 
+      method:'PUT',
+      headers: { 'Content-Type': 'application/JSON' },
+      body: `{ \"id\": \"${id}\", \"burger_name\": \"${burger_name}\" }`
+    }).then( r => r.json());
+    console.log(res.message);
+  }
+  else {
+    // delete burger
+    const res = await fetch(`/burger/${id}`, { method:'DELETE' }).then( r => r.json());
+    console.log(res.message);
+  }
+  
+  loadList();
+}
 
 loadList();
