@@ -1,7 +1,7 @@
 // File to set up routes for the app
-var express = require("express");
-var router = express.Router();
-var burger = require("../models/burger.js");
+// var express = require("express");
+// var router = express.Router();
+// var burger = require("../models/burger.js");
 
 // GET REQUEST grab data from all the burgers from the burgers table.
 router.get("/", function (req, res) {
