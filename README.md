@@ -6,4 +6,4 @@ Each burger in the waiting area also has a `Devour it!` button. When the user cl
 App:https://jose-burgers.herokuapp.com/
 
 Screenshot:
-![Screenshot](./public/assets/screenshot.png?raw=true)
+![Screenshot](./public/assets/screenshot.PNG?raw=true)
