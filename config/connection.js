@@ -1,25 +1,40 @@
-// Set up MySQL connection.
-var mysql = require("mysql");
+const mysql = require('mysql');
 
-var connection; 
-if (process.env.JAWSDB_URL){
-  connection = mysql.createConnection(process.env.JAWSDB_URL)
-} else {
-connection = mysql.createConnection({
-  host: "localhost",
-  port: process.env.PORT || 3306,
-  user: "root",
-  password: "joseantonio",
-  database: "burgers_db"
-})};
 
-// Make connection.
-connection.connect(function(err) {
-  if (err) {
-    console.error("error connecting: " + err.stack);
-    return;
+class Database {
+  
+  constructor(config) {
+    this.connection = mysql.createConnection(process.env.JAWSDB_URL ? process.env.JAWSDB_URL : config);
   }
-});
 
-// Export connection for our ORM to use.
-module.exports = connection;
+  query(sql, args = []) {
+    return new Promise((resolve, reject) => {
+      this.connection.query(sql, args, (err, rows) => {
+        if (err) return reject(err);
+        resolve(rows);
+      });
+    });
+  }
+
+  close() {
+    return new Promise((resolve, reject) => {
+      this.connection.end(err => {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
+  }
+}
+
+function dbConnect(dbName, dbPassword) {
+  const db = new Database({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: dbPassword,
+    database: dbName
+  })
+  return db
+}
+
+module.exports = dbConnect
