@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  button {
+    line-height: 1.5rem;
+    width: 160px;
+    cursor: pointer;
+  }
+  
+  .container {
+    width: 80vw;
+    max-width: 1200px;
+    background-color: rgb(178, 211, 240);
+    text-align: center;
+    padding: 0 0.5rem 2rem 0.5rem;
+  }
+  
+  @media (max-width: 900px) {
+    .container {
+      width: 100vw;
+    }
+  }
+  
+  .row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 0.5rem 0;
+  }
+  
+  .user-input {
+    background-color: rgb(152, 207, 233);
+    padding: 0.5rem 0;
+  }
+  
+  .input-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input-area input {
+    width: 90%;
+    min-width: 350px;
+    line-height: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-area input::placeholder {
+    color: rgb(168, 168, 168);
+  }
