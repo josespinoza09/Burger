@@ -1,36 +1,28 @@
-const connection = require("../config/connection.js");
+const db = require('./connection.js')('burgers_db','joseantonio');
 
-// variable to set object relational mapping(orm)
-const orm = {
-    // function to select burgers from the database
-    selectAll: function (tableName, sel) {
-        var queryString = `SELECT * FROM ${tableName};`;
-        connection.query(queryString, function (err, result) {
-            if (err) {
-                throw err;
-            }
-            sel(result);
-        });
-    },
-    // function to add a burger
-    insertOne: function (tableName, cols, vals, sel) {
-        var queryString = `INSERT INTO ${tableName} (${cols}) VALUES ('${vals}');`;
-        connection.query(queryString, function (err, result) {
-            if (err) {
-                throw err;
-            }
-            sel(result);
-        });
-    },
-    // function to update burger
-    updateOne: function (colVal, id, sel) {
-        var queryString = `UPDATE burgers SET devoured='1' WHERE ${colVal}=${id}`;
-        connection.query(queryString, [id], function (err, result) {
-            if (err) {
-                throw err;
-            }
-            sel(result);
-        });
-    }
+async function selectAll() {
+  const data = db.query('SELECT * FROM burgers');
+  return data;
 }
-module.exports = orm;
+
+async function insertOne(burger_name) {
+  const request = await db.query('INSERT INTO burgers (burger_name, is_eaten) VALUES (?, 0)', burger_name);
+  return request;
+}
+
+async function updateOne(burger_name, id) {
+  const request = await db.query('UPDATE burgers SET burger_name = ?, is_eaten = 1 WHERE id = ?',
+  [burger_name, Number(id)]);
+  return request;
+}
+
+async function delOne(id) {
+  const request = await db.query('DELETE FROM burgers WHERE id = ?', Number(id));
+  return request;
+}
+
+function end() {
+  db.close();
+}
+
+module.exports = {selectAll, insertOne, updateOne, delOne, end};
